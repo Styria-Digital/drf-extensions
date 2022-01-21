@@ -51,16 +51,16 @@ if sys.argv[-1] == 'publish':
 
 
 setup(
-    name='drf-extensions',
+    name='drf-extensions-styria',
     version=version,
-    url='http://github.com/chibisov/drf-extensions',
-    download_url='https://pypi.python.org/pypi/drf-extensions/',
+    url='https://github.com/Styria-Digital/drf-extensions',
+    download_url='http://pypi.sds.rocks:9090/packages/drf-extensions-styria/',
     license='BSD',
     install_requires=['djangorestframework>=3.9.3'],
-    description='Extensions for Django REST Framework',
+    description='Extensions for Django REST Framework with customizations',
     long_description='DRF-extensions is a collection of custom extensions for Django REST Framework',
-    author='Asif Saif Uddin, Gennady Chibisov',
-    author_email='auvipy@gmail.com',
+    author='Styria Digital Development',
+    author_email='digital.development@styria.dev',
     packages=get_packages('rest_framework_extensions'),
     package_data=get_package_data('rest_framework_extensions'),
     test_suite='rest_framework_extensions.runtests.runtests.main',
