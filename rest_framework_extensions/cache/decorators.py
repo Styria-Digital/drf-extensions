@@ -1,8 +1,5 @@
 from functools import wraps, WRAPPER_ASSIGNMENTS
 
-from django.http.response import HttpResponse
-
-
 from rest_framework_extensions.settings import extensions_api_settings
 
 
@@ -24,6 +21,7 @@ class CacheResponse:
         to unknowingly cache whole Serializers and QuerySets.
 
     """
+
     def __init__(self,
                  timeout=None,
                  key_func=None,
@@ -44,7 +42,8 @@ class CacheResponse:
         else:
             self.cache_errors = cache_errors
 
-        self.cache = get_cache(cache or extensions_api_settings.DEFAULT_USE_CACHE)
+        self.cache = get_cache(
+            cache or extensions_api_settings.DEFAULT_USE_CACHE)
 
     def __call__(self, func):
         this = self
@@ -77,31 +76,18 @@ class CacheResponse:
 
         timeout = self.calculate_timeout(view_instance=view_instance)
 
-        response_triple = self.cache.get(key)
-        if not response_triple:
-            # render response to create and cache the content byte string
+        response = self.cache.get(key)
+        if not response:
             response = view_method(view_instance, request, *args, **kwargs)
-            response = view_instance.finalize_response(request, response, *args, **kwargs)
-            response.render()
+            response = view_instance.finalize_response(
+                request, response, *args, **kwargs
+            )
+            response.render(
+            )  # should be rendered before storing to cache
 
             if not response.status_code >= 400 or self.cache_errors:
-                # django 3.0 has not .items() method, django 3.2 has not ._headers
-                if hasattr(response, '_headers'):
-                    headers = response._headers.copy()
-                else:
-                    headers = {k: (k, v) for k, v in response.items()}
-                response_triple = (
-                    response.rendered_content,
-                    response.status_code,
-                    headers
-                )
-                self.cache.set(key, response_triple, timeout)
-        else:
-            # build smaller Django HttpResponse
-            content, status, headers = response_triple
-            response = HttpResponse(content=content, status=status)
-            for k, v in headers.values():
-                response[k] = v
+                self.cache.set(key, response, timeout)
+
         if not hasattr(response, '_closable_objects'):
             response._closable_objects = []
 
