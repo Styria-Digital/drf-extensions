@@ -1,4 +1,24 @@
-## Django REST Framework extensions
+## Django REST Framework extensions - Styria edition
+
+This is a repository for a customized version of [DRF extensions](https://github.com/chibisov/drf-extensions) packages.
+
+Styria used the official package for a long time for the development of our own internal packages and projects, mostly due to an awesome cache mechanism developed by the official package contributors. The reason for forking and using this customized version of the package started from version `0.5.0` when `cache.decorators.CacheResponse` was altered significantly by implementation of different response caching logic, where the response is cached in [response_triple](https://github.com/chibisov/drf-extensions/commit/cb53a4756778b0e2856fb40162bc11eea9d3a2ed) instead on complete rendered response as before. Better performance is a probable reason for this change in official package, but we run to a blocking issue when those changes were deployed to multi-instance production environment (More info in the [Customization changelog](#customization-changelog) below). 
+
+This repository is intended to sync periodically with `chibisov` repository in order to be up to date with the latest changes.
+
+Releasing as an installable package is planned only for a private repo for now, and version numbers will follow an official one with one extra dotted number. In the example, if there is an official version of `0.7.1`, the tag that follows this version here will be `0.7.1.1`
+
+### Customization changelog
+
+#### 0.7.1.1 - unreleased
+
+- [cache.decorators.CacheResponse](https://github.com/Styria-Digital/drf-extensions/pull/1/files) - Use _single response caching_ logic that was used till version of `0.4.0`. Apply other code changes in order to match official version
+- [setup.py](https://github.com/Styria-Digital/drf-extensions/pull/2/files#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7) - Changed meta data to distinguish from `chibisov` package
+- [tox.ini](https://github.com/Styria-Digital/drf-extensions/pull/2/files#diff-ef2cef9f88b4fe09ca3082140e67f5ad34fb65fb6e228f119d3812261ae51449) - Added custom `tox` commands for deployment
+
+--------------------------------
+## Official documentation below
+--------------------------------
 
 DRF-extensions is a collection of custom extensions for [Django REST Framework](https://github.com/tomchristie/django-rest-framework)
 
