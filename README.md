@@ -10,7 +10,7 @@ Releasing as an installable package is planned only for a private repo for now, 
 
 ### Customization changelog
 
-#### 0.7.1.1 - unreleased
+#### 0.7.1.1 - (2022-01-25)
 
 - [cache.decorators.CacheResponse](https://github.com/Styria-Digital/drf-extensions/pull/1/files) - Use _single response caching_ logic that was used till version of `0.4.0`. Apply other code changes in order to match official version
 - [setup.py](https://github.com/Styria-Digital/drf-extensions/pull/2/files#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7) - Changed meta data to distinguish from `chibisov` package
